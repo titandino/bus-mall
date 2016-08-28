@@ -8,61 +8,62 @@ BMImage.prototype.click = function() {
   this.clicks++;
 };
 
+images = [];
+dispImage = [];
+totalClicks = 0;
+
 var BusMall = {
-  images: [],
-  dispImage: [],
-  totalClicks: 0,
 
   click: function(event) {
     console.log(event.target);
     console.log(event.target.id);
     console.log(parseInt(event.target.id));
     console.log(this.dispImage);
-    this.dispImage[parseInt(event.target.id)].click();
-    this.totalClicks++;
-    this.randomize();
+    dispImage[parseInt(event.target.id)].click();
+    totalClicks++;
+    BusMall.randomize();
   },
 
   randomize: function() {
     for (var i = 0;i < 3;i++) {
-      this.dispImage[i] = this.images[i];
-      console.log('Setting #' + i + ' to ' + this.dispImage[i]);
+      dispImage[i] = images[i];
+      console.log('Setting #' + i + ' to ' + dispImage[i]);
     }
-    this.update();
+    BusMall.update();
   },
 
   update: function() {
     for (var i = 0;i < 3;i++) {
-      document.getElementById('' + i).src = this.dispImage[i].path;
+      document.getElementById('' + i).src = dispImage[i].path;
     }
   },
 
   loadImages: function() {
-    this.images.push(new BMImage('Bag', 'bag.jpg'));
-    this.images.push(new BMImage('Banana', 'banana.jpg'));
-    this.images.push(new BMImage('Bathroom', 'bathroom.jpg'));
-    this.images.push(new BMImage('Boots', 'boots.jpg'));
-    this.images.push(new BMImage('Breakfast', 'breakfast.jpg'));
-    this.images.push(new BMImage('Bubble Gum', 'bubblegum.jpg'));
-    this.images.push(new BMImage('Chair', 'chair.jpg'));
-    this.images.push(new BMImage('Cthulhu', 'cthulhu.jpg'));
-    this.images.push(new BMImage('Dog duck', 'dog-duck.jpg'));
-    this.images.push(new BMImage('Dragon', 'dragon.jpg'));
-    this.images.push(new BMImage('Pen', 'pen.jpg'));
-    this.images.push(new BMImage('Pet Sweep', 'pet-sweep.jpg'));
-    this.images.push(new BMImage('Scissors', 'scissors.jpg'));
-    this.images.push(new BMImage('Shark', 'shark.jpg'));
-    this.images.push(new BMImage('Sweep', 'sweep.jpg'));
-    this.images.push(new BMImage('Tauntaun', 'tauntaun.jpg'));
-    this.images.push(new BMImage('Unicorn', 'unicorn.jpg'));
-    this.images.push(new BMImage('USB', 'usb.gif'));
-    this.images.push(new BMImage('Watering can', 'water-can.jpg'));
-    this.images.push(new BMImage('Wine glass', 'wine-glass.jpg'));
+    images.push(new BMImage('Bag', 'bag.jpg'));
+    images.push(new BMImage('Banana', 'banana.jpg'));
+    images.push(new BMImage('Bathroom', 'bathroom.jpg'));
+    images.push(new BMImage('Boots', 'boots.jpg'));
+    images.push(new BMImage('Breakfast', 'breakfast.jpg'));
+    images.push(new BMImage('Bubble Gum', 'bubblegum.jpg'));
+    images.push(new BMImage('Chair', 'chair.jpg'));
+    images.push(new BMImage('Cthulhu', 'cthulhu.jpg'));
+    images.push(new BMImage('Dog duck', 'dog-duck.jpg'));
+    images.push(new BMImage('Dragon', 'dragon.jpg'));
+    images.push(new BMImage('Pen', 'pen.jpg'));
+    images.push(new BMImage('Pet Sweep', 'pet-sweep.jpg'));
+    images.push(new BMImage('Scissors', 'scissors.jpg'));
+    images.push(new BMImage('Shark', 'shark.jpg'));
+    images.push(new BMImage('Sweep', 'sweep.jpg'));
+    images.push(new BMImage('Tauntaun', 'tauntaun.jpg'));
+    images.push(new BMImage('Unicorn', 'unicorn.jpg'));
+    images.push(new BMImage('USB', 'usb.gif'));
+    images.push(new BMImage('Watering can', 'water-can.jpg'));
+    images.push(new BMImage('Wine glass', 'wine-glass.jpg'));
   },
 
   main: function() {
-    this.loadImages();
-    this.randomize();
+    BusMall.loadImages();
+    BusMall.randomize();
   }
 };
 

@@ -4,15 +4,16 @@ main, header, footer {
 }
 
 h1, h2 {
+  width: 50%;
   margin: 0 auto;
 }
 
-#img-section img {
-  width: 20%;
-  height: auto;
-}
-
-#img-selection {
+#img-section {
   display: flex;
   flex-direction: row;
+}
+
+#img-section img {
+  width: 30%;
+  height: 30%;
 }

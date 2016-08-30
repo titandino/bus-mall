@@ -12,15 +12,44 @@ var BusMall = {
   images: [],
   dispImage: [],
   totalClicks: 0,
+  resultsDisplayed: false,
 
   click: function(event) {
-    if (this.totalClicks < 15) {
+    if (BusMall.totalClicks < 15) {
       BusMall.dispImage[parseInt(event.target.id)].click();
       BusMall.totalClicks++;
       BusMall.randomize();
     } else {
-
+      if (!BusMall.resultsDisplayed)
+        BusMall.displayResults();
     }
+  },
+
+  reset: function(event) {
+    if (BusMall.totalClicks >= 15) {
+      document.getElementById('reset-button').style.display = 'none';
+      while (document.getElementById('result-section').firstChild)
+        document.getElementById('result-section').removeChild(document.getElementById('result-section').firstChild);
+    }
+    BusMall.loadImages();
+    BusMall.totalClicks = 0;
+    BusMall.resultsDisplayed = false;
+  },
+
+  displayResults: function() {
+    document.getElementById('reset-button').style.display = 'block';
+    this.images.sort(function(a, b) { return b.clicks - a.clicks });
+    var list = document.createElement('ul');
+    for (var i = 0;i < this.images.length;i++) {
+      var imageItem = document.createElement('li');
+      imageItem.textContent = this.images[i].imgName + ' - ' + this.images[i].clicks + ' clicks';
+      list.appendChild(imageItem);
+    }
+    var total = document.createElement('li');
+    total.textContent = this.totalClicks;
+    list.appendChild(total);
+    document.getElementById('result-section').appendChild(list);
+    this.resultsDisplayed = true;
   },
 
   randomize: function() {
@@ -39,6 +68,7 @@ var BusMall = {
   },
 
   loadImages: function() {
+    this.images = [];
     this.images.push(new BMImage('Bag', 'bag.jpg'));
     this.images.push(new BMImage('Banana', 'banana.jpg'));
     this.images.push(new BMImage('Bathroom', 'bathroom.jpg'));
@@ -87,4 +117,5 @@ BusMall.main();
 
 window.onload = function() {
   document.getElementById('img-section').addEventListener('click', BusMall.click);
+  document.getElementById('reset-button').addEventListener('click', BusMall.reset);
 };

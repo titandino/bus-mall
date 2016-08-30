@@ -17,3 +17,7 @@ h1, h2 {
   width: 30%;
   height: 30%;
 }
+
+#reset-button {
+  display: none;
+}

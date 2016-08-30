@@ -46,7 +46,7 @@ var BusMall = {
       list.appendChild(imageItem);
     }
     var total = document.createElement('li');
-    total.textContent = this.totalClicks;
+    total.textContent = 'Total clicks ' + this.totalClicks;
     list.appendChild(total);
     document.getElementById('result-section').appendChild(list);
     this.resultsDisplayed = true;

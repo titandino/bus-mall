@@ -13,6 +13,7 @@ var BusMall = {
   dispImage: [],
   totalClicks: 0,
   resultsDisplayed: false,
+  chartCtx: document.getElementById('result-canvas').getContext('2d'),
 
   click: function(event) {
     if (BusMall.totalClicks < 15) {
@@ -38,18 +39,38 @@ var BusMall = {
 
   displayResults: function() {
     document.getElementById('reset-button').style.display = 'block';
-    this.images.sort(function(a, b) { return b.clicks - a.clicks });
-    var list = document.createElement('ul');
+    var chartArgs = {};
+    chartArgs.type = 'bar';
+    chartArgs.data = {};
+    chartArgs.data.labels = [];
+    chartArgs.data.datasets = [];
+    chartArgs.data.datasets[0] = {};
+    chartArgs.data.datasets[0].label = 'Number of Clicks';
+    chartArgs.data.datasets[0].data = [];
+    chartArgs.data.datasets[0].borderWidth = 1;
     for (var i = 0;i < this.images.length;i++) {
-      var imageItem = document.createElement('li');
-      imageItem.textContent = this.images[i].imgName + ' - ' + this.images[i].clicks + ' clicks';
-      list.appendChild(imageItem);
+      labels[i] = this.images[i].imgName;
+      chartArgs.data.datasets[0].data[i] = this.images[i].clicks;
     }
-    var total = document.createElement('li');
-    total.textContent = 'Total clicks ' + this.totalClicks;
-    list.appendChild(total);
-    document.getElementById('result-section').appendChild(list);
-    this.resultsDisplayed = true;
+    new Chart(ctx, chartArgs);
+    /*
+    chartArgs.data.datasets[0].backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(255, 159, 64, 0.2)'
+    ],
+    chartArgs.data.datasets[0].borderColor: [
+      'rgba(255,99,132,1)',
+      'rgba(54, 162, 235, 1)',
+      'rgba(255, 206, 86, 1)',
+      'rgba(75, 192, 192, 1)',
+      'rgba(153, 102, 255, 1)',
+      'rgba(255, 159, 64, 1)'
+    ],
+    */
   },
 
   randomize: function() {

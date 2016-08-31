@@ -24,6 +24,12 @@ h1, h2 {
   height: 30%;
 }
 
+#result-canvas {
+  display: none;
+  width: 75%;
+  height: 300px;
+}
+
 #reset-button {
   display: none;
 }

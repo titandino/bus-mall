@@ -14,6 +14,7 @@ var BusMall = {
   totalClicks: 0,
   resultsDisplayed: false,
   chartCtx: document.getElementById('result-canvas').getContext('2d'),
+  chart: null,
 
   click: function(event) {
     if (BusMall.totalClicks < 15) {
@@ -29,8 +30,7 @@ var BusMall = {
   reset: function(event) {
     if (BusMall.totalClicks >= 15) {
       document.getElementById('reset-button').style.display = 'none';
-      while (document.getElementById('result-section').firstChild)
-        document.getElementById('result-section').removeChild(document.getElementById('result-section').firstChild);
+      document.getElementById('result-canvas').style.display = 'none';
     }
     BusMall.loadImages();
     BusMall.totalClicks = 0;
@@ -39,6 +39,7 @@ var BusMall = {
 
   displayResults: function() {
     document.getElementById('reset-button').style.display = 'block';
+    document.getElementById('result-canvas').style.display = 'block';
     var chartArgs = {};
     chartArgs.type = 'bar';
     chartArgs.data = {};
@@ -48,17 +49,28 @@ var BusMall = {
     chartArgs.data.datasets[0].label = 'Number of Clicks';
     chartArgs.data.datasets[0].data = [];
     chartArgs.data.datasets[0].borderWidth = 1;
+
+    this.images.sort(function(a, b) { return b.clicks - a.clicks });
+
     for (var i = 0;i < this.images.length;i++) {
-      labels[i] = this.images[i].imgName;
+      chartArgs.data.labels[i] = this.images[i].imgName;
       chartArgs.data.datasets[0].data[i] = this.images[i].clicks;
     }
     chartArgs.data.datasets[0].backgroundColor = [];
     chartArgs.data.datasets[0].borderColor = [];
     for (var i = 0;i < this.images.length;i++) {
-      chartArgs.data.datasets[0].backgroundColor[i] = 'rgba(255, 99, 132, 0.2)';
-      chartArgs.data.datasets[0].borderColor[i] = 'rgba(255, 99, 132, 1)';
+      var col = 'rgba(' + random(0, 255) + ', ' + random(0, 255) + ', ' + random(0, 255);
+      chartArgs.data.datasets[0].backgroundColor[i] = col + ', 0.2)';
+      chartArgs.data.datasets[0].borderColor[i] = col + ', 1.0)';;
     }
-    new Chart(ctx, chartArgs);
+    if (!this.chart) {
+      this.chart = new Chart(this.chartCtx, chartArgs);
+      this.chart.update();
+    } else {
+      this.chart.config = chartArgs;
+      this.chart.update();
+    }
+    BusMall.resultsDisplayed = true;
   },
 
   randomize: function() {

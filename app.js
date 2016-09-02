@@ -49,19 +49,20 @@ var BusMall = {
     chartArgs.data.datasets[0].label = 'Number of Clicks';
     chartArgs.data.datasets[0].data = [];
     chartArgs.data.datasets[0].borderWidth = 1;
+    chartArgs.data.datasets[0].backgroundColor = [];
+    chartArgs.data.datasets[0].borderColor = [];
 
-    this.images.sort(function(a, b) { return b.clicks - a.clicks });
+    this.images.sort(function(a, b) {
+      return b.clicks - a.clicks;
+    });
 
     for (var i = 0;i < this.images.length;i++) {
       chartArgs.data.labels[i] = this.images[i].imgName;
       chartArgs.data.datasets[0].data[i] = this.images[i].clicks;
-    }
-    chartArgs.data.datasets[0].backgroundColor = [];
-    chartArgs.data.datasets[0].borderColor = [];
-    for (var i = 0;i < this.images.length;i++) {
+
       var col = 'rgba(' + random(0, 255) + ', ' + random(0, 255) + ', ' + random(0, 255);
       chartArgs.data.datasets[0].backgroundColor[i] = col + ', 0.2)';
-      chartArgs.data.datasets[0].borderColor[i] = col + ', 1.0)';;
+      chartArgs.data.datasets[0].borderColor[i] = col + ', 1.0)';
     }
     if (!this.chart) {
       this.chart = new Chart(this.chartCtx, chartArgs);
